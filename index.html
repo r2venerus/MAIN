@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debt Capital Partners CRM &middot; Baird Augustine</title>
+</head>
+<body>
+
+<style>
+:root{
+  color-scheme: light dark;
+  --bg:#f5f6f8; --panel:#ffffff; --panel-2:#fafbfc; --sunken:#f1f3f6;
+  --ink:#161b22; --ink-2:#3d4550; --ink-3:#69727f; --ink-4:#98a1ad;
+  --line:#e4e7ec; --line-2:#eef0f3;
+  --accent:#0f6d70; --accent-ink:#0a4b4e; --accent-wash:#e4f1f0;
+  --gold:#9a6b12;
+  --ok:#1a7f4b; --ok-wash:#e3f3ea; --ok-line:#bfe4cd;
+  --warn:#9a6410; --warn-wash:#fbeed4; --warn-line:#eed4a0;
+  --stop:#a23b3b; --stop-wash:#f6e4e2; --stop-line:#e8c3bd;
+  --info:#2a5aa8; --info-wash:#e6edf8; --info-line:#c3d4ef;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.06);
+  --radius:12px;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0c0f13; --panel:#13181e; --panel-2:#161c23; --sunken:#0f141a;
+    --ink:#e9edf2; --ink-2:#b9c2cd; --ink-3:#8b95a2; --ink-4:#5f6875;
+    --line:#252c35; --line-2:#1c232b;
+    --accent:#3fb0af; --accent-ink:#7fd3d1; --accent-wash:#123033;
+    --gold:#d3a54e;
+    --ok:#54c684; --ok-wash:#10261a; --ok-line:#1f4530;
+    --warn:#d6a43e; --warn-wash:#271e0c; --warn-line:#4a3a17;
+    --stop:#d97a72; --stop-wash:#27130f; --stop-line:#4a251f;
+    --info:#6f9de6; --info-wash:#0f1a2c; --info-line:#213249;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f5f6f8; --panel:#ffffff; --panel-2:#fafbfc; --sunken:#f1f3f6;
+  --ink:#161b22; --ink-2:#3d4550; --ink-3:#69727f; --ink-4:#98a1ad;
+  --line:#e4e7ec; --line-2:#eef0f3;
+  --accent:#0f6d70; --accent-ink:#0a4b4e; --accent-wash:#e4f1f0; --gold:#9a6b12;
+  --ok:#1a7f4b; --ok-wash:#e3f3ea; --ok-line:#bfe4cd;
+  --warn:#9a6410; --warn-wash:#fbeed4; --warn-line:#eed4a0;
+  --stop:#a23b3b; --stop-wash:#f6e4e2; --stop-line:#e8c3bd;
+  --info:#2a5aa8; --info-wash:#e6edf8; --info-line:#c3d4ef;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.06);
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0c0f13; --panel:#13181e; --panel-2:#161c23; --sunken:#0f141a;
+  --ink:#e9edf2; --ink-2:#b9c2cd; --ink-3:#8b95a2; --ink-4:#5f6875;
+  --line:#252c35; --line-2:#1c232b;
+  --accent:#3fb0af; --accent-ink:#7fd3d1; --accent-wash:#123033; --gold:#d3a54e;
+  --ok:#54c684; --ok-wash:#10261a; --ok-line:#1f4530;
+  --warn:#d6a43e; --warn-wash:#271e0c; --warn-line:#4a3a17;
+  --stop:#d97a72; --stop-wash:#27130f; --stop-line:#4a251f;
+  --info:#6f9de6; --info-wash:#0f1a2c; --info-line:#213249;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 24px 80px;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+h1,h2,h3{margin:0;text-wrap:balance;}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent-ink);font-weight:600;}
+
+/* header */
+header.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+  flex-wrap:wrap;margin-bottom:22px;}
+.title h1{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:6px;}
+.title p{margin:6px 0 0;color:var(--ink-3);max-width:60ch;}
+.theme-btn{border:1px solid var(--line);background:var(--panel);color:var(--ink-2);
+  border-radius:8px;padding:8px 12px;font-size:12px;font-family:var(--mono);cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* KPI row */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px;}
+@media (max-width:820px){.kpis{grid-template-columns:repeat(2,1fr);} }
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.kpi .n{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+  line-height:1;font-family:var(--mono);}
+.kpi .l{margin-top:8px;font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;}
+.kpi .stripe{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);}
+.kpi.ok .stripe{background:var(--ok)} .kpi.ok .n{color:var(--ok)}
+.kpi.warn .stripe{background:var(--warn)} .kpi.warn .n{color:var(--warn)}
+.kpi.info .stripe{background:var(--info)} .kpi.info .n{color:var(--info)}
+.kpi.stop .stripe{background:var(--stop)} .kpi.stop .n{color:var(--stop)}
+
+/* pipeline bar */
+.pipeline{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:var(--shadow);margin-bottom:20px;}
+.pipeline .cap{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.pipeline .cap h3{font-size:13px;font-weight:600;color:var(--ink-2);}
+.pipeline .cap span{font-family:var(--mono);font-size:12px;color:var(--ink-3);}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--sunken);}
+.bar > i{display:block;height:100%;}
+.bar > i.s-signed{background:var(--ok)} .bar > i.s-progress{background:var(--warn)}
+.bar > i.s-prospect{background:var(--info)} .bar > i.s-none{background:var(--stop)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block;}
+
+/* tabs + controls */
+.controls{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;margin-bottom:14px;}
+.tabs{display:inline-flex;background:var(--sunken);border:1px solid var(--line);
+  border-radius:9px;padding:3px;}
+.tabs button{border:0;background:transparent;color:var(--ink-3);font-family:var(--sans);
+  font-size:13px;font-weight:600;padding:7px 14px;border-radius:7px;cursor:pointer;}
+.tabs button[aria-selected="true"]{background:var(--panel);color:var(--ink);box-shadow:var(--shadow);}
+.filterbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+.search{flex:1;min-width:200px;position:relative;}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);border-radius:9px;font-size:13.5px;font-family:var(--sans);}
+.search input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent;}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink-4);}
+.chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink-2);border-radius:20px;
+  padding:6px 12px;font-size:12.5px;cursor:pointer;font-family:var(--sans);white-space:nowrap;
+  display:inline-flex;align-items:center;gap:6px;}
+.chip:hover{border-color:var(--accent);}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink);}
+.chip .dot{width:8px;height:8px;border-radius:50%;}
+.chip .ct{font-family:var(--mono);font-size:11px;opacity:.75;}
+select.owner{border:1px solid var(--line);background:var(--panel);color:var(--ink-2);
+  border-radius:9px;padding:8px 10px;font-size:13px;font-family:var(--sans);cursor:pointer;}
+
+/* table */
+.tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:820px;}
+thead th{position:sticky;top:0;background:var(--panel-2);text-align:left;font-size:11px;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;
+  padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none;}
+thead th.sortable:hover{color:var(--accent);}
+thead th .ar{font-family:var(--mono);opacity:.5;margin-left:3px;}
+tbody tr{border-bottom:1px solid var(--line-2);cursor:pointer;}
+tbody tr:last-child{border-bottom:0;}
+tbody tr:hover{background:var(--panel-2);}
+td{padding:12px 14px;vertical-align:middle;}
+td.num{font-family:var(--mono);color:var(--ink-4);font-size:12px;width:34px;text-align:right;}
+td.name{font-weight:600;color:var(--ink);}
+td.name .sub{font-weight:400;color:var(--ink-3);font-size:12px;margin-top:2px;}
+td.cat{color:var(--ink-2);font-size:13px;max-width:260px;}
+td.deal{color:var(--ink-2);font-size:12.5px;max-width:180px;}
+td.split{font-family:var(--mono);font-size:12px;color:var(--gold);max-width:170px;}
+td.owner{font-size:12.5px;color:var(--ink-2);white-space:nowrap;}
+.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* status pill */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;
+  padding:4px 9px;border-radius:20px;white-space:nowrap;border:1px solid transparent;font-family:var(--sans);}
+.pill i{width:7px;height:7px;border-radius:50%;}
+.pill.signed{background:var(--ok-wash);color:var(--ok);border-color:var(--ok-line);} .pill.signed i{background:var(--ok)}
+.pill.progress{background:var(--warn-wash);color:var(--warn);border-color:var(--warn-line);} .pill.progress i{background:var(--warn)}
+.pill.prospect{background:var(--info-wash);color:var(--info);border-color:var(--info-line);} .pill.prospect i{background:var(--info)}
+.pill.none{background:var(--stop-wash);color:var(--stop);border-color:var(--stop-line);} .pill.none i{background:var(--stop)}
+
+/* economics view */
+td.econ-split{font-family:var(--mono);font-size:12.5px;color:var(--gold);max-width:340px;white-space:normal;}
+td.econ-agree{font-size:12.5px;color:var(--ink-2);max-width:260px;}
+.linkpill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;
+  border:1px solid var(--accent-wash);background:var(--accent-wash);color:var(--accent-ink);
+  padding:3px 8px;border-radius:6px;}
+.muted{color:var(--ink-4);font-style:italic;font-size:12px;}
+
+.count{font-family:var(--mono);font-size:12px;color:var(--ink-3);padding:10px 4px 0;}
+.empty{padding:48px;text-align:center;color:var(--ink-3);}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,14,20,.5);opacity:0;pointer-events:none;
+  transition:opacity .2s;z-index:40;backdrop-filter:blur(2px);}
+.scrim.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(560px,94vw);background:var(--panel);
+  border-left:1px solid var(--line);box-shadow:-16px 0 40px rgba(10,14,20,.2);z-index:50;
+  transform:translateX(100%);transition:transform .26s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;}
+.drawer.open{transform:translateX(0);}
+.drawer .dhead{padding:20px 24px 16px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+  background:var(--panel-2);}
+.drawer .dhead h2{font-size:19px;font-weight:700;letter-spacing:-.01em;}
+.drawer .dhead .idx{font-family:var(--mono);font-size:11px;color:var(--ink-4);margin-bottom:6px;}
+.drawer .dhead .meta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.xbtn{border:1px solid var(--line);background:var(--panel);color:var(--ink-3);border-radius:8px;
+  width:32px;height:32px;font-size:17px;cursor:pointer;line-height:1;flex:none;}
+.xbtn:hover{border-color:var(--stop);color:var(--stop);}
+.dbody{overflow-y:auto;padding:8px 24px 40px;}
+
+/* economics highlight card in drawer */
+.econcard{margin:16px 0 8px;border:1px solid var(--accent-wash);background:var(--accent-wash);
+  border-radius:12px;padding:16px;}
+.econcard .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent-ink);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.econcard .split{font-size:15px;color:var(--ink);line-height:1.45;font-weight:500;}
+.econcard .agreerow{margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);}
+
+.field{padding:13px 0;border-bottom:1px solid var(--line-2);}
+.field:last-child{border-bottom:0;}
+.field .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-4);margin-bottom:5px;}
+.field .v{color:var(--ink);font-size:13.5px;line-height:1.55;overflow-wrap:anywhere;}
+.field .v a{overflow-wrap:anywhere;}
+.section-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent-ink);font-weight:600;margin:20px 0 2px;padding-top:6px;}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-4);
+  font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+@media (max-width:560px){
+  td.cat,td.deal,td.owner{display:none;}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="title">
+      <div class="eyebrow">Baird Augustine &middot; Retail Debt Partners</div>
+      <h1>Debt Capital Partners CRM</h1>
+      <p>Onboarding &amp; referral-agreement tracker for debt providers in the outreach pipeline. Click any partner for the full profile, referral economics, and contacts.</p>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐ Theme</button>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="pipeline">
+    <div class="cap"><h3>Onboarding pipeline</h3><span id="pipeTotal"></span></div>
+    <div class="bar" id="pipeBar"></div>
+    <div class="legend" id="pipeLegend"></div>
+  </div>
+
+  <div class="controls">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-view="directory">Directory</button>
+      <button role="tab" aria-selected="false" data-view="economics">Referral economics</button>
+    </div>
+    <div class="count" id="rowCount"></div>
+  </div>
+
+  <div class="filterbar">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="search" placeholder="Search name, category, product, contact, notes…" autocomplete="off">
+    </div>
+    <select class="owner" id="ownerSel"><option value="">All owners</option></select>
+    <div class="chips" id="statusChips"></div>
+  </div>
+
+  <div class="tablewrap">
+    <table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+    <div class="empty" id="empty" hidden>No partners match these filters.</div>
+  </div>
+
+  <footer>
+    <span>30 debt partners &middot; source: Retail Debt Partners workbook</span>
+    <span id="asof"></span>
+  </footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Partner detail"></aside>
+
+<script>
+const DATA = [{"Name": "Haut Finance", "Referral Agreement Signed?": "Yes", "BA SF": "50/50", "Capital Category": "Structured Finance, Investment Banking, Trade Finance, Corporate Advisory", "Product Types": "Structured Finance, Supply Chain Finance, Trade Finance, Project Finance, Debt Raising, Private Equity Placement, M&A Advisory, Bond Placements, Working Capital Finance, Vendor Financing, Receivables Discounting, Mezzanine Capital, Convertible Instruments", "Industries Served": "Real Estate, Infrastructure, Manufacturing, Consumer Brands, Agriculture, FMCG, Technology, Media & Entertainment, Government & Public Sector Projects", "Deal Size": "100M-1B", "Cost of Capital": "", "Revenue Requirements": "4x Loan", "Required Documentation": "", "Marketing Materials Link": "https://drive.google.com/file/d/10Yz0YWFNyA10i7T4u71-Dz7lm1pwaG7O/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "", "Contact Email": "", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "", "Referral Agreement Link": "", "#": 1, "Onboarding Status": "Signed"}, {"Name": "BDIM", "Referral Agreement Signed?": "Yes - Email is Referral", "BA SF": "20% of what they make (2 %) Orgination Fee", "Capital Category": "BDIM CRE Debt Advisory / Bridge Lending / Real Estate Finance Brokerage", "Product Types": "Acquisition financing, refinance financing, bridge loans, bank debt, hard money/private loans, CMBS, mezzanine debt, agency debt, Fannie Mae, Freddie Mac, credit union financing", "Industries Served": "Investment real estate owners across major CRE asset classes; borrowers with upcoming loan maturities, acquisition needs, refinance needs, or long-term relationship potential", "Deal Size": "$1M+ minimum; will consider smaller files case-by-case; sweet spot $3M–$100M; no stated maximum", "Cost of Capital": "Varies by loan type, lender, leverage, asset class, and transaction structure; bridge lending tear sheet indicates 11%–12% interest rate and 2 points origination fee", "Revenue Requirements": "No specific revenue requirement stated; underwriting likely based on property cash flow, borrower/sponsor strength, collateral, loan request, and exit strategy", "Required Documentation": "Debt advisory deck; bridge lending tear sheet; executive summary; address/property information; loan request; leases/rent roll; YTD profit & loss statement; PFS; SREO", "Marketing Materials Link": "https://drive.google.com/file/d/1O0sU8t5VestpZIrlOjJO5zf4fyGMXmzu/view?usp=drive_linkhttps://drive.google.com/file/d/1DHevR8yrqr5jGH6eca7cYFhO9jWR5szQ/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "https://www.bdim.com/", "Contact Email": "noah@bdim.com", "Contact Phone": "(516) 660-5693", "Contact Name": "Noah Rhine", "Meeting Notes": "", "Referral Agreement Link": "", "#": 2, "Onboarding Status": "Signed"}, {"Name": "Big Think Capital", "Referral Agreement Signed?": "Yes", "BA SF": "**30% of all BTC commissions and fees received (including origination fees); paid after cleared funding.**", "Capital Category": "Marketplace Lender / Small Business Finance", "Product Types": "SBA Loans, Term Loans, Business Lines of Credit, Commercial Real Estate Loans, Equipment Financing, Working Capital Financing", "Industries Served": "General Small Business, Commercial Real Estate, Equipment-Intensive Businesses", "Deal Size": "SBA Loans: Up to $5M; Business Lines of Credit: $5K–$1M; Commercial Real Estate Loans: Up to $50M; Equipment Financing: Up to Equipment Cost; Term Loans: Varies; Working Capital Financing: Varies", "Cost of Capital": "Varies by product and borrower profile; SBA loans are generally lower-cost with longer repayment terms but take longer to close; working capital is faster and easier to qualify for but typically higher-cost; term loans, LOC, CRE, and equipment financing pricing depends on credit, revenue, time in business, collateral, and risk profile", "Revenue Requirements": "SBA: 640+ credit score; term loans: $100K+ annual revenue, 1+ year in business, 660+ credit; LOC: $10K+ monthly revenue, 600+ credit; CRE: 620+ credit; equipment financing: $10K+ monthly revenue, 2+ years in business, 600+ credit; working capital: $5K+ monthly revenue, credit score as low as 450", "Required Documentation": "Application form; business bank statements; business and personal tax returns depending on product/loan size; personal financial statement for SBA; schedule of real estate for CRE; equipment invoice for equipment financing", "Marketing Materials Link": "https://drive.google.com/file/d/1kqekcpgdOeLSdYSIfPdF7L9o9mTRONtW/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "www.bigthinkcapital.com", "Contact Email": "jake.navarro@bigthinkcapital.com", "Contact Phone": "516-475-2061", "Contact Name": "Jake Navarro", "Meeting Notes": "", "Referral Agreement Link": "", "#": 3, "Onboarding Status": "Signed"}, {"Name": "Awaken Finance", "Referral Agreement Signed?": "Willing to share economics", "BA SF": "Willing to share economics", "Capital Category": "Crypto / Digital Asset Multi-Family Office & Structured Finance Investor", "Product Types": "Structured Finance, Structured Products, Fund Investments, Direct Investments, Strategic Capital, Venture Capital", "Industries Served": "Cryptocurrency, Blockchain, Web3, DeFi, Digital Asset Infrastructure, FinTech", "Deal Size": "Institutional Scale ($1M+ to $100M+; exact ranges not publicly disclosed)", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "Follow up", "Relationship Owner": "Ryan", "Website": "", "Contact Email": "", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "", "Referral Agreement Link": "", "#": 4, "Onboarding Status": "In Progress"}, {"Name": "GMO Payment Gateway", "Referral Agreement Signed?": "NO referral fee - must charge the client 1-2%", "BA SF": "NO referral fee - must charge the client 1-2%", "Capital Category": "Fintech Venture Debt / Asset-Based Lending Platform", "Product Types": "Venture Debt, Asset-Based Lending (ABL), Cash Flow Lending, Growth Capital, Working Capital Facilities, Structured Credit, Credit Facilities, Fintech Lending", "Industries Served": "SaaS, Fintech, Technology, Ecommerce, Venture-Backed Companies, High-Growth Businesses, Digital Platforms", "Deal Size": "$500K–$50M+", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "Follow up", "Relationship Owner": "Ryan", "Website": "https://www.gmo-pg.com/en/", "Contact Email": "kamahara@gmo-pg.com", "Contact Phone": "", "Contact Name": "Taka K.", "Meeting Notes": "", "Referral Agreement Link": "", "#": 5, "Onboarding Status": "No Program"}, {"Name": "C6", "Referral Agreement Signed?": "Yes", "BA SF": "50% of Company's underwriting/origination fee (typically 2%–5% of funded amount) for each referred client that closes financing; effective payout to Agent generally equals 1%–2.5% of funded loan amount.", "Capital Category": "Special Situations Credit Fund / Structured Finance Lender", "Product Types": "Bridge Loans, Working Capital, Acquisition Financing, Partner Buyouts, IPO Bridges, Growth Capital, Event-Driven Financing, Rescue Capital, Subordinated Debt, Senior Secured Loans, Asset-Based Loans, Revenue-Based Financing, Recurring Revenue Financing, Non-Dilutive Venture Debt", "Industries Served": "Healthcare, Manufacturing, Industrials, Logistics, Transportation, Construction, SaaS, Technology, Media, Telecom, Consumer Products, Retail, Energy, Real Estate, Professional Services, Staffing, Agriculture, Automotive, Cannabis, Medical Devices", "Deal Size": "$250,000 – $15,000,000+", "Cost of Capital": "MOIC of 1.15x–1.45x; 1–12 month terms; 30%–50% early prepayment discount available; no equity ownership required", "Revenue Requirements": "Typically funds up to 10% of TTM run-rate revenue; U.S.-based companies preferred; private, sponsor-backed, and public companies eligible", "Required Documentation": "No formal checklist stated; likely financials, revenue support, collateral details, AR/inventory/contracts, ownership/guarantor info, repayment source, and security documents", "Marketing Materials Link": "https://drive.google.com/file/d/1RE9ualTTnM3_vpnUi2Kyu6CZfA7dCb8i/view?usp=drive_link https://drive.google.com/file/d/1nXxHSMH7vjEmEqmenIaaLYw59dI8UTEW/view?usp=drive_link https://drive.google.com/file/d/1nXxHSMH7vjEmEqmenIaaLYw59dI8UTEW/view?usp=drive_link https://drive.google.com/file/d/1BFY0Bp9dhCx_fPrek_LtRJmUjxfiFV4A/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "www.c6capllc.com", "Contact Email": "cmazzella@c6cap.com", "Contact Phone": "914-213-4165", "Contact Name": "Chris Mazzella", "Meeting Notes": "", "Referral Agreement Link": "", "#": 6, "Onboarding Status": "Signed"}, {"Name": "Clearco", "Referral Agreement Signed?": "Yes", "BA SF": "10% of fees for first 3 months; 5% of fees for following 9 months on funded invoices from referred customers.", "Capital Category": "Revenue-Based Financing Platform / Ecommerce Working Capital Provider", "Product Types": "Invoice Funding, Inventory Financing, Receipt Financing, Working Capital Advances, Cash Advances, Fixed Funding Capacity, Rolling Funding Capacity", "Industries Served": "Ecommerce, Consumer Products, Apparel, Fashion, Beauty, Cosmetics, Health & Wellness, DTC Brands, Amazon Sellers, Shopify Merchants, BigCommerce Merchants", "Deal Size": "Invoice Funding ($10K–$10M+), Inventory & Supplier Financing ($25K–$10M+), Receipt Financing ($10K–$5M+), Working Capital & Cash Advances ($10K–$10M+), Growth Capital ($100K–$10M+)", "Cost of Capital": "Fixed fee of 3.63%–12.5% depending on the selected 4–6 month extension plan; no periodic or compounding interest; total fee is disclosed upfront and does not increase during the extension period", "Revenue Requirements": "Funding capacity is based on business performance, revenue, and selected extension plan; Clearco reviews synced sales account and bank account data to determine preliminary funding capacity", "Required Documentation": "No formal document checklist stated; requires connected sales accounts such as Shopify or Amazon, connected business bank accounts, and invoices for invoice funding / supplier invoice financing", "Marketing Materials Link": "https://drive.google.com/file/d/1DXLzLwid6Kw2XpGwTEY2ZcpokFBBBmD1/view?usp=drive_link https://drive.google.com/file/d/18m8GIb_o_fCeGg4WL1jp4vSmGqIqupz8/view?usp=drive_linkRyan", "Relationship Owner": "", "Website": "www.clear.co", "Contact Email": "samuel.bell@clearbanc.com", "Contact Phone": "", "Contact Name": "Sam Bell", "Meeting Notes": "", "Referral Agreement Link": "", "#": 7, "Onboarding Status": "Signed"}, {"Name": "Reiger Shore (Greg)", "Referral Agreement Signed?": "Yes", "BA SF": "50% of fees collected by Reiger Shore from referred clients", "Capital Category": "Debt Capital Advisory / Specialty Finance Advisory (Access to 300 lenders)", "Product Types": "Working Capital Financing, Acquisition Financing, Growth Capital, Bridge Loans, Asset-Based Lending, Accounts Receivable Financing, Inventory Financing, Equipment Financing, Structured Debt, Refinancing, Capital Raising", "Industries Served": "Manufacturing, Distribution, Transportation, Logistics, Healthcare, Consumer Products, Retail, Construction, Professional Services, Business Services, Technology, Industrials", "Deal Size": "$250K–$50M+", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "https://drive.google.com/file/d/1kIW5VJ5xM_m4WD9B9_KNVhBeKvI_oS2y/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "", "Contact Email": "", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "", "Referral Agreement Link": "", "#": 8, "Onboarding Status": "Signed"}, {"Name": "ARC", "Referral Agreement Signed?": "Updated referral pending", "BA SF": "10% of Arc Success Fees on transactions funded by lenders introduced", "Capital Category": "Cash Management & Capital Markets Platform / Tech-Enabled Debt Advisory", "Product Types": "Cash management, treasury accounts, brokerage yield accounts, business accounts, corporate card/spend tools, DACA/control accounts, debt raise/debt marketplace, venture debt, warehouse facilities, leasing credit facilities, equipment financing, M&A facilities, and CFO Agent/AI financial tools", "Industries Served": "Technology companies, SaaS, AI, fintech, venture-backed startups, ecommerce, B2B software, healthcare technology, equipment-heavy companies, and high-growth companies", "Deal Size": "Series A debt generally $5M–$10M; example target debt amount of $5M; transaction examples include $10M equipment deal, $20M M&A facility, $50M leasing revolving credit facility, and $200M credit card warehouse facility", "Cost of Capital": "No stated borrower interest rate or debt pricing; Arc helps source competitive lender terms and may earn success fees on funded transactions; platform offers up to 4.06%–4.51% net yield on brokerage depending on membership tier, but this is yield earned on cash, not cost of debt", "Revenue Requirements": "No specific revenue requirement stated; target users are technology, startup, venture-backed, and high-growth companies seeking cash management, treasury, DACA/control account services, or institutional debt capital", "Required Documentation": "AI-enabled data room, uploaded documents, connected data sources, financials, borrower materials, company data, sales/bank/account information as applicable, and additional lender diligence depending on facility type", "Marketing Materials Link": "https://drive.google.com/file/d/1kIW5VJ5xM_m4WD9B9_KNVhBeKvI_oS2y/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "https://www.joinarc.com/", "Contact Email": "daniel@joinarc.com", "Contact Phone": "", "Contact Name": "Daniel Stuccilli", "Meeting Notes": "Met with Omid Izadjou(oizadjou@joinarc.com) June 22nd- VP of Revenue / Reached out to Daniel Regarding updated referral agreement 6/23/26https://docs.google.com/document/d/1wZ31RBTtvWbwA0-tuYEvA4PAR_tDIKJQRANl2WBVqRQ/edit?tab=t.ieevcpfemzdk", "Referral Agreement Link": "", "#": 9, "Onboarding Status": "In Progress"}, {"Name": "Liquid Ventures limited (Crypto Lending)", "Referral Agreement Signed?": "Yes", "BA SF": "**0.5% origination fee on loans up to $25M; 0.5% on loans $25M–$100M; 1.0% on loans over $100M.**", "Capital Category": "Liquidity Ventures – Bitcoin-focused accelerator and referral partner. Does not provide lending directly; referred BA to JTSA for potential financing opportunities.", "Product Types": "", "Industries Served": "", "Deal Size": "", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "", "Relationship Owner": "", "Website": "", "Contact Email": "M@liquidityventures.io", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "Reached Out regarding Marketing materials", "Referral Agreement Link": "", "#": 10, "Onboarding Status": "Signed"}, {"Name": "Ready Capital", "Referral Agreement Signed?": "Pending need to fill out W9- Sent Wiring instructions", "BA SF": "", "Capital Category": "SBA Lending, CRE Lending, Government-Guaranteed Lending", "Product Types": "SBA 7(a) Loans, SBA 504 Loans, USDA B&I Loans, Commercial Mortgages, Bridge Loans, Construction Loans, Working Capital Loans, Acquisition Financing", "Industries Served": "Manufacturing, Industrial, Healthcare, Hospitality, Retail, Automotive, Warehousing, Self-Storage, Agriculture, Food Supply Chain, Construction, Franchise, Commercial Real Estate", "Deal Size": "SBA: $350,000–$7,000,000 | USDA B&I: Up to $25,000,000", "Cost of Capital": "USDA B&I rates typically 5-year T-bill + 4.50%–5.50%; SBA 7(a) pricing not specifically stated, but offers longer-term government-backed financing with low borrower equity requirements, ability to finance closing costs, and limited/no prepayment penalties", "Revenue Requirements": "No specific revenue requirement stated; SBA 7(a) real estate must generally be owner-occupied or utilized at more than 51%; USDA B&I must be in eligible rural areas/towns under 50,000 population or qualifying county/parish locations", "Required Documentation": "No formal documentation checklist stated; likely SBA/USDA application, business financials, tax returns, personal financial statement, use-of-funds details, real estate/equipment information, ownership documents, and eligibility support depending on loan type", "Marketing Materials Link": "https://drive.google.com/file/d/1YwVinVQ7PQityjdo7Bc10TkVrAkuyXSE/view?usp=drive_link https://drive.google.com/file/d/1G_594kQ8lsF5qy8Z7qUyOEyGXe0CbsFI/view?usp=drive_linkhttps://drive.google.com/file/d/1GRBHh_4O8C7qCQGo2deS-uCOybNLpFAx/view?usp=drive_link", "Relationship Owner": "Robert /Ryan", "Website": "https://readycapital.com/", "Contact Email": "Karen.Domingo@readycapital.com", "Contact Phone": "(973) 577-4661", "Contact Name": "Karen Domingo", "Meeting Notes": "", "Referral Agreement Link": "", "#": 11, "Onboarding Status": "In Progress"}, {"Name": "Saratoga Investment Corp", "Referral Agreement Signed?": "Pending", "BA SF": "50/50 Pending agreement", "Capital Category": "Private Credit, Cash Flow Lending, Acquisition Financing, Growth Capital", "Product Types": "Subordinated Debt, First Lien Loans, Second Lien Loans, Senior Secured Loans, Unitranche Loans, One-Stop Facilities, Delayed Draw Term Loans, Equity Co-Investments", "Industries Served": "Software, Technology, Healthcare Technology, Business Services, IT Services, Hospitality Technology, Commercial Real Estate Technology, HR Technology, Consumer Services, Franchises, Restaurants, Food & Beverage", "Deal Size": "$5,000,000-$75,000,000", "Cost of Capital": "No stated rate or pricing provided; pricing is deal-specific based on leverage, EBITDA/ARR, lien position, credit risk, collateral, use of proceeds, and whether equity co-investment is included", "Revenue Requirements": "EBITDA of at least $2M or annual recurring revenue of $5M+; prefers strong margins, free cash flow, stable historical performance, recurring revenue, modest capex/working capital needs, and strong management ownership", "Required Documentation": "No formal document checklist stated; likely CIM/deal summary, historical financials, projections, EBITDA/ARR support, debt schedule, cap table, management information, transaction overview, use of proceeds, customer/revenue detail, and diligence materials depending on structure", "Marketing Materials Link": "https://drive.google.com/file/d/1mzEhnl7SezBxUhGCCqa-T7OQGZmLcUFf/view?usp=drive_link", "Relationship Owner": "Robert /Ryan", "Website": "https://www.saratogainvestmentcorp.com/", "Contact Email": "rich@saratogapartners.com", "Contact Phone": "(646) 515-3645", "Contact Name": "Rich Petrocelli (MD)", "Meeting Notes": "Spoke to Rich on phone 6/10/26", "Referral Agreement Link": "", "#": 12, "Onboarding Status": "In Progress"}, {"Name": "Monroe Capital", "Referral Agreement Signed?": "Pending In compliance", "BA SF": "Mentioned 50 Bips", "Capital Category": "Private Credit, Cash Flow Lending, SaaS Financing", "Product Types": "Cash Flow Loans, Enterprise Value Loans, Recurring Revenue Loans, Asset-Backed Facilities, Senior Credit Facilities, Alternative Credit Facilities, Equity Co-Investments", "Industries Served": "HealthcareTechnologySports, Media & EntertainmentRetail & Consumer ProductsSpecialty FinanceVenture DebtIndependent SponsorReal EstateOther Specialties", "Deal Size": "Up to $300 million hold size for companies with a minimum EBITDA of $5 million", "Cost of Capital": "No stated rate or pricing provided; pricing is deal-specific based on EBITDA, leverage, credit profile, lien position, collateral, enterprise value, sponsor support, industry, and transaction structure", "Revenue Requirements": "Targets middle-market companies with EBITDA starting at $5M; recurring revenue/SaaS financing may be underwritten based on ARR, growth, retention, and enterprise value", "Required Documentation": "No formal checklist stated; likely CIM/deal summary, historical financials, projections, EBITDA/ARR support, debt schedule, cap table, sponsor/ownership information, use of proceeds, transaction overview, customer/revenue detail, collateral information for ABL, and diligence materials depending on structure", "Marketing Materials Link": "https://drive.google.com/file/d/1apiEu5sUezdmP40Crhbl6gLqtZIPVlso/view?usp=drive_link", "Relationship Owner": "Robert /Ryan", "Website": "https://monroecap.com/team/", "Contact Email": "rschafer@monroecap.com", "Contact Phone": "(312) 754-8345", "Contact Name": "Ryan Schafer (VP)", "Meeting Notes": "Spoke to Ryan on phone 6/10/26 will get back to us within a week. Referral Agreement in compliance. Followed up 6/23/26", "Referral Agreement Link": "", "#": 13, "Onboarding Status": "In Progress"}, {"Name": "Breakout Finance", "Referral Agreement Signed?": "Yes", "BA SF": "Breakout Finance – Referral Compensation:** Up to 3.0% of funded loan principal (Simple Referral); 1.0% if Partnering on Deal Referral; Factoring referrals earn 5–10% of Breakout factoring fees; renewals paid at same rates. Subject to 60-business-day clawback if default occurs.**", "Capital Category": "Short-Term Working Capital / Term Loans / Bridge Capital", "Product Types": "Term loans, bridge term loans, working capital financing, accounts receivable financing, purchase order financing, debt consolidation/refinance, covenant relief capital, payroll/operating capital", "Industries Served": "Preferred industries include healthcare, manufacturing, staffing, consulting, technology, and government contracting; restricted industries include agriculture, finance/insurance, mining, real estate/leasing, and transportation/warehousing", "Deal Size": "Up to $2M; Bridge Term Loan up to $500K; terms up to 2 years; estimated funding timeline 1–2 days", "Cost of Capital": "No stated APR/rate provided; Waive Term Loan waives 100% of remaining interest if repaid within 90 days; Bridge Term Loan charges zero interest if fully repaid within first 30 days", "Revenue Requirements": "Minimum $50K average monthly revenue; minimum 1 year in business; minimum 580 FICO", "Required Documentation": "application, business bank statements, AR/borrowing base support, purchase orders/contracts if applicable, existing debt schedule, financials, ownership/credit information, and use-of-funds details", "Marketing Materials Link": "https://drive.google.com/file/d/1ba6-zWyEStBUxfuGdWq0l8RLWoXY_cu9/view?usp=drive_link", "Relationship Owner": "Robert /Ryan", "Website": "https://www.breakoutfinance.com", "Contact Email": "amoss@breakoutfinance.com", "Contact Phone": "864.490.4498", "Contact Name": "Andrew Moss (VP)", "Meeting Notes": "", "Referral Agreement Link": "", "#": 14, "Onboarding Status": "Signed"}, {"Name": "Slim Capital", "Referral Agreement Signed?": "Yes- Sending over Copy", "BA SF": "", "Capital Category": "Equipment Finance / Asset-Based Lending / Cash-Out Equipment Financing / Working Capital", "Product Types": "Equipment finance, cash-out equipment financing, sale-leaseback, asset-based lending, unsecured working capital, software financing, cannabis equipment financing, restaurant equipment financing, startup equipment financing, and equipment refinancing", "Industries Served": "Equipment-heavy businesses including transportation, construction, materials handling, machine tools, manufacturing, livery, industrial, vocational, packaging, cannabis equipment, restaurants/food trucks, and software; exclusions for cash-out include medical equipment, commercial printers, forestry equipment, and Class 8 sleepers", "Deal Size": "Program-dependent; Tier I app-only up to $500K; Tier II up to $150K; Tier III up to $75K; startup max $60K financing / $75K equipment cost with 20% down; cannabis app-only up to $150K; cash-out EFA terms up to 60 months; equipment terms up to 72 months; unsecured working capital terms 6–18 months", "Cost of Capital": "No stated interest rate; positioned as lower-cost than MCA financing; monthly payments instead of daily/weekly payments; no early payoff penalty on cash-out program if payments are made on time", "Revenue Requirements": "Varies by program; cash-out requires 600+ FICO, 2+ years in business, and unencumbered business equipment; Tier I requires 680+ FICO and 5+ years in business; Tier II requires 620+ FICO and 2+ years; working capital requires 1+ year in business, 625+ FICO, and $150K+ annual revenue; software requires 2+ years and 650+ FICO", "Required Documentation": "App-only up to $500K: signed credit application, equipment invoice, and 3 months full bank statements; $500K+ full financials: app-only documents plus 3 years business/personal financial statements and tax returns, current interim statements, personal financial statement, debt schedule, and equipment purchase justification; cash-out also requires a facilities list and “Cash-Out” listed as loan purpose", "Marketing Materials Link": "https://drive.google.com/file/d/1XzIHxNmGYUhvOIac3eBBxIH0Ei9FHKCP/view?usp=drive_link https://drive.google.com/file/d/1v6I3mnyCiAYEAQymSQtNyVTzeeMCQKJu/view?usp=drive_link", "Relationship Owner": "Robert /Ryan", "Website": "https://www.slimcapital.com/", "Contact Email": "Jeff@slimcapital.com", "Contact Phone": "949-981-0431", "Contact Name": "Jeff Brannon( Head of Sales)", "Meeting Notes": "", "Referral Agreement Link": "", "#": 15, "Onboarding Status": "Signed"}, {"Name": "Biz2Credit", "Referral Agreement Signed?": "Pending- Background Check - Need to Send over void check and passport", "BA SF": "RSA / MCA ~3%New Working Capital / LOC / Equipment Financing 2%New Term Loan 1%Renewal / Refinance Working Capital / LOC / Equipment Financing 1%Renewal / Refinance Term Loan 0.5%", "Capital Category": "SMB Lending, MCA / Revenue-Based Financing, Working Capital, Term Loans, Lines of Credit", "Product Types": "Merchant Cash Advance / Revenue-Based Financing, Term Loans, Business Lines of Credit", "Industries Served": "Broad range of U.S. small businesses / SMBs", "Deal Size": "General funding: $25K–$2M+; Term Loans: $25K–$1M+; LOC: up to $500K; RBF average funding around $110K", "Cost of Capital": "Varies by product and underwriting; RBF/MCA uses factor-rate / future-receivables repayment, not normal fixed interest; term loans/LOC pricing depends on credit, revenue, and approval", "Revenue Requirements": "RBF: $250K+ annual revenue, 575+ FICO, 1+ year in business; Term Loan: $250K+ annual revenue, 650+ FICO, 18+ months in business; LOC varies, often based on credit, revenue, and time in business", "Required Documentation": "Basic business info, 3–6 months business bank statements, tax returns, legal/entity docs, business plan or loan purpose, balance sheet, P&L, business/personal tax returns, business tax ID/EIN, ID/passport, voided business check", "Marketing Materials Link": "https://drive.google.com/file/d/1yReVE2Unh-VC5A0d7LeJsDy0HBET2jP6/view?usp=drive_link https://drive.google.com/file/d/15SPlBm4A8XwcZFUKKIK3Zr6tm5ZPMMTL/view?usp=drive_link. https://drive.google.com/file/d/15SPlBm4A8XwcZFUKKIK3Zr6tm5ZPMMTL/view?usp=drive_link. https://drive.google.com/file/d/1p80mEjW8lHHH11BBfWa675bQXwCCKMjV/view?usp=drive_link. https://drive.google.com/file/d/1guDTaB_yuzxVwgPEgUvf65NPLZPDP2yu/view?usp=drive_link", "Relationship Owner": "Ryan (Robert reached back out)", "Website": "Biz2Credit.com", "Contact Email": "tommy.blinder@biz2credit.com", "Contact Phone": "332.699.4693", "Contact Name": "Tommy Blinder", "Meeting Notes": "Send over NDA spoke on phone 6/9/26", "Referral Agreement Link": "", "#": 16, "Onboarding Status": "In Progress"}, {"Name": "Forward Financing", "Referral Agreement Signed?": "Pending Response from Parker richards", "BA SF": "", "Capital Category": "Revenue-Based Financing", "Product Types": "Revenue Advances, Revenue-Based Financing", "Industries Served": "Over 700 supported including trucking, restaurants, and retail.Restricted: Prohibits cannabis, firearms, adult entertainment, and financial firms.", "Deal Size": "Typically $5,000 to $500,000 with a $33,000 overall", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "https://drive.google.com/file/d/1ufeShhmCX5WajwqHYQL7Gbx540SHuk5h/view?usp=drive_link", "Relationship Owner": "Robert/Ryan", "Website": "https://www.forwardfinancing.com", "Contact Email": "prichards@forwardfinancing.com", "Contact Phone": "(617) 729-2519", "Contact Name": "Parker Richards (Acct Manager)", "Meeting Notes": "Reached back out 6/23/26", "Referral Agreement Link": "", "#": 17, "Onboarding Status": "In Progress"}, {"Name": "Hum Capital", "Referral Agreement Signed?": "Yes", "BA SF": "30% of Hum + BA success Fee", "Capital Category": "Growth Debt / Private Credit Marketplace / Non-Dilutive Business Financing", "Product Types": "Term Loans; Credit Lines; Delayed Draw Facilities; Multi-Tranche Debt Facilities; Working Capital Financing; Acquisition Financing; Debt Refinancing", "Industries Served": "Industry agnostic; U.S. and Canadian growth companies across various verticals; limited excluded industries", "Deal Size": "$1M–$7M facility size; average ~$3.1M", "Cost of Capital": "1.0%–1.5% per month; monthly repayment; 12–36 month terms", "Revenue Requirements": "$3M–$50M annual revenue; minimum 2.5%–5% YoY revenue growth; underwriting based on DSCR", "Required Documentation": "Borrowers securely connect financial software to Hum’s platform; Hum uses its Intelligent Marketplace / Hum AI to evaluate business fundamentals and match companies with investors/lendershttps://humcapital.com/our-story/", "Marketing Materials Link": "", "Relationship Owner": "Robert/ Ryan", "Website": "https://humcapital.com", "Contact Email": "kaare@humcapital.com", "Contact Phone": "914-486-4410", "Contact Name": "Kaare Andersen", "Meeting Notes": "", "Referral Agreement Link": "", "#": 18, "Onboarding Status": "Signed"}, {"Name": "Bigfoot Capital", "Referral Agreement Signed?": "Yes", "BA SF": "**5% of gross interest income from referred clients; paid monthly while client remains active and not in default.**", "Capital Category": "Growth Debt / Venture Debt / SaaS & Tech-Enabled Services Lending", "Product Types": "Multi-Draw Term Loan Facilities; Non-Dilutive Growth Capital; M&A Financing; Bridge-to-Equity Financing", "Industries Served": "B2B software and tech-enabled services companies in the U.S. and Canada", "Deal Size": "Initial check size: $1M–$5M; 36-month term per draw; up to 12-month draw period", "Cost of Capital": "Interest rate plus fee; no warrants; exact pricing not specified", "Revenue Requirements": "$2M–$15M ARR; 20%+ annual revenue growth; 50%+ recurring revenue mix; gross margins 70%+ for SaaS or 50%+ for tech-enabled services; net cash burn up to 50% of revenue", "Required Documentation": "Required documentation not specified; likely financial statements, ARR/revenue detail, recurring revenue metrics, customer data, cap table, debt schedule, and use of funds", "Marketing Materials Link": "https://drive.google.com/file/d/1Ca3rIn3IyKhz8KmnBSVzAmGnluxbF0W9/view?usp=drive_link", "Relationship Owner": "Robert/Ryan", "Website": "https://bigfootcap.com", "Contact Email": "chawthorne@bigfootcap.com", "Contact Phone": "516-330-4338", "Contact Name": "Carter Hathorne", "Meeting Notes": "", "Referral Agreement Link": "", "#": 19, "Onboarding Status": "Signed"}, {"Name": "Area", "Referral Agreement Signed?": "Does not do Referrals", "BA SF": "No Referral Fee", "Capital Category": "UHNW Art Finance / Collectibles Asset-Based Lending / Specialty Lending", "Product Types": "Annual Renewable Lines of Credit; Term Facilities; Revolving Lines secured by fine art collections and select collectibles", "Industries Served": "UHNW individuals; trusts; operating entities; family offices; art collectors; collectors with diversified collateral pools", "Deal Size": "$10M minimum facility size; 50% advance rate / 2x collateral coverage required; annual renewable line or term structure", "Cost of Capital": "Approximately SOFR + 250 bps; borrower pays setup fees, unused-line fees, appraisal costs, and outside counsel legal fees", "Revenue Requirements": "No business revenue requirement stated; underwriting based on UHNW guarantor cash flow, liquidity, net worth, and ability to service principal and interest; guarantor NW generally $50M–$100M+", "Required Documentation": "Liquidity statements; 2 years tax returns; personal/entity financial statements; artwork provenance; third-party appraisal; collateral details; UCC filing; 15%–20% of loan amount held with bank in acceptable liquid assets", "Marketing Materials Link": "https://drive.google.com/file/d/1zZG33RUw0doexyBspEzISJWg6P_65CiU/view?usp=sharing", "Relationship Owner": "Ryan", "Website": "https://www.aera.inc/", "Contact Email": "pasha@aera.inc", "Contact Phone": "calendly.com/pasha-aera", "Contact Name": "Pasha Baradaran", "Meeting Notes": "", "Referral Agreement Link": "", "#": 20, "Onboarding Status": "No Program"}, {"Name": "NFS Leasing", "Referral Agreement Signed?": "Sent to JP Camire- Need to sign", "BA SF": "2% of The net Financed Amount", "Capital Category": "Specialty Equipment Finance / Story Credit Equipment Leasing / Asset-Based Lending", "Product Types": "FMV Leases; $1-Out Capital Leases; Sale-Leasebacks; Equipment Finance Agreements; Asset-Based Term Loans; New and Used Equipment Financing", "Industries Served": "Industry agnostic; focus on technology, life sciences, healthcare, construction, manufacturing, and industrial automation; excludes cannabis, long-haul trucking, and firearms", "Deal Size": "$150K–$15M; application-only up to $250K; flexible terms depending on asset class and structure", "Cost of Capital": "Not stated; pricing varies by credit profile, collateral, structure, guarantees, down payment, and risk mitigants", "Revenue Requirements": "No fixed revenue requirement stated; targets early-stage, growth-stage, low/negative EBITDA, turnaround, and unique story credits with a clear path forward", "Required Documentation": "Up to $250K: credit application, last 3 months business bank statements, equipment quote. Above $250K: last 3 months bank statements, current YTD P&L, current YTD balance sheet, last 2 years business tax returns, debt schedule, PFS. Also reviews vendor, prefunding/progress payments, equipment location, business benefit, down payment ability, and budgeted monthly payment.https://drive.google.com/file/d/1oiGE4FthQKjgVctfUa9xohebPUn6y3OH/view?usp=drive_link", "Marketing Materials Link": "", "Relationship Owner": "Robert/Ryan", "Website": "https://www.nfscapital.com/", "Contact Email": "awhyman@nfsleasing.com", "Contact Phone": "978-712-4050", "Contact Name": "JP Camire", "Meeting Notes": "", "Referral Agreement Link": "", "#": 21, "Onboarding Status": "In Progress"}, {"Name": "ARF Financial", "Referral Agreement Signed?": "Yes", "BA SF": "Up to 8% (4% upfront + 4% earn-out), plus residuals and production bonuses.", "Capital Category": "SMB Working Capital / Revolving Line of Credit / Short-Term Business Lending", "Product Types": "P&I Revolving Line of Credit; IO Flex Pay; IO Bankroll; Working Capital Financing; Debt Refinancing", "Industries Served": "Approved SMB industries including healthcare, restaurants, hospitality, retail, professional services, manufacturing, IT services, automotive, salons, dry cleaners, pet stores, and other service businesses", "Deal Size": "$5K–$1.5M overall program; P&I LOC minimum initial draw $15K; IO Flex Pay minimum initial draw $50K; IO Bankroll minimum initial draw $50K; terms up to 36 months / interest-only and revolving options available", "Cost of Capital": "Cost not fully stated; 3–4 points at closing depending on product; interest-only options available; no early payoff penalties", "Revenue Requirements": "General minimum: 575+ Equifax, 30+ days revenue, $50K+ monthly sales for P&I LOC; IO Flex Pay: 651+ credit score, 3+ years in business, home ownership; IO Bankroll: 651+ credit score, 4+ years in business, home ownership, profitable tax returns, $1.2M+ annual sales", "Required Documentation": "Credit application; business bank statements; proof of sales/revenue; ownership/guarantor information; tax returns for IO Bankroll/profit verification; review of competitor positions, deposits, NSFs, employee count, and recent MCA/short-term funding", "Marketing Materials Link": "https://drive.google.com/file/d/1m78z-w3pkMWWMR-cDDAdpLjj29SJc-nj/view?usp=drive_linkhttps://drive.google.com/file/d/1BfRXrXz9JSGnWITWikWXmFeY_2Omcajw/view?usp=drive_linkhttps://drive.google.com/file/d/1MfrbHdRgmrgzzO1LnWf8TlYo0SzJtXb9/view?usp=drive_linkhttps://drive.google.com/file/d/1R0d_KiAfGs-DIr5duYH7UqSpWF3snZ7e/view?usp=drive_linkhttps://drive.google.com/file/d/1eSF4sDBUP4EJ1BmkO0UnurDZ4f98Skm6/view?usp=drive_linkhttps://drive.google.com/file/d/1dpMrRCjWwhArarEMAKMxsfwI0K-RJQki/view?usp=drive_link", "Relationship Owner": "Robert/Ryan", "Website": "https://www.arffinancial.com/", "Contact Email": "jhidalgo@arffinancial.com", "Contact Phone": "(754) 778-6744", "Contact Name": "Jose Hidalgo", "Meeting Notes": "", "Referral Agreement Link": "", "#": 22, "Onboarding Status": "Signed"}, {"Name": "Quantum Financial Technologies", "Referral Agreement Signed?": "Yes", "BA SF": "Term Loans3.0% of funded loan amount (one-time)Fee-Based Loans4.0% of funded loan amount (one-time)Lines of Credit2.0% of commitment amount (one-time) + 1.0% annual portfolio fee (paid monthly for 18 months on performing accounts)", "Capital Category": "Alternative SMB Lending / Tech-Enabled Business Credit / Working Capital", "Product Types": "Term Loans; Fee-Based Lines of Credit; MCA Payoff / Debt Refinance", "Industries Served": "Preferred industries include healthcare, accounting, architecture/engineering, breweries/wineries; higher-risk includes construction, retail, transportation, real estate, and food services; prohibited includes firearms, tobacco, gambling, marijuana, non-profits, and motor vehicle dealers", "Deal Size": "Term Loans up to $250K; Fee-Based LOC up to $150K; term loan repayment 12–60 months; LOC 12–24 months re-amortized after each draw", "Cost of Capital": "Term Loans: 14.99%–35.99% plus 5% origination fee; LOC: 1.6%–3.0% fee-based pricing plus 3% commitment fee", "Revenue Requirements": "Minimum 680+ FICO, focus on 700+; $150K+ annual revenue, focus on $200K+; 1+ year in business; average bank balance $3K+; no more than 10 NSFs in last 3 months", "Required Documentation": "Application through partner portal; Equifax soft credit pull; business bank statements / bank activity review; ownership information; revenue verification; MCA/short-term debt review; no more than one active MCA position", "Marketing Materials Link": "https://drive.google.com/file/d/1rOWvqrnbrL4AuvENMm4L3wmJfdAe4Fei/view?usp=drive_link", "Relationship Owner": "Robert/Ryan", "Website": "https://www.quantumlends.com/", "Contact Email": "chris.niebur@quantumlends.com", "Contact Phone": "720-436-9194", "Contact Name": "Chris Niebur", "Meeting Notes": "", "Referral Agreement Link": "", "#": 23, "Onboarding Status": "Signed"}, {"Name": "Dexly Finance", "Referral Agreement Signed?": "Yes", "BA SF": "Need to Acquire Comp breakdown", "Capital Category": "MCA / Revenue-Based Financing / Alternative SMB Funding", "Product Types": "Merchant Cash Advances; Revenue-Based Financing; Working Capital Advances; Short-Term Business Funding", "Industries Served": "Broad SMB industries across all U.S. states and Puerto Rico; Canada considered if business is U.S.-registered; restricted industries require $1M+ monthly revenue; prohibited industries include used auto dealerships, cannabis, financial services, and religious services", "Deal Size": "$75K–$5M; terms typically 5–12 months; daily or weekly repayment; Texas must be first position", "Cost of Capital": "MCA pricing / factor rate not stated; origination fees range from 1%–10% based on risk profile and business performance", "Revenue Requirements": "12+ months in business; restricted industries require $1M+ monthly revenue; no bankruptcies; no more than 5 negative days in most recent month and no more than 12 negative days over last 3 months", "Required Documentation": "Application; business bank statements; ownership/guarantor info; business verification docs; revenue verification; bank activity review; existing MCA/short-term debt position review", "Marketing Materials Link": "https://drive.google.com/file/d/1I0AhOku2uuhCUDyDrxJ2xVQ09pESiEnG/view?usp=drive_link https://drive.google.com/file/d/1EjwUMgnivAV9qcZ1NWQqNu-O8mPZyuMe/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "www.dexlyfinance.com", "Contact Email": "nell@dexlyfinance.com", "Contact Phone": "347-362-8632", "Contact Name": "Nell Grabczak", "Meeting Notes": "", "Referral Agreement Link": "", "#": 24, "Onboarding Status": "Signed"}, {"Name": "Customers Bank", "Referral Agreement Signed?": "Pending Referral - Sent all materials", "BA SF": "1.0% of funded SBA 7(a) loan amount", "Capital Category": "Commercial Bank / Commercial Lending / SBA & C&I Lending", "Product Types": "CRE Lending; C&I Loans; Equipment Financing & Leasing; SBA Loans; M&A Financing; ESOP Loan Structures; Treasury Management & Deposit Optimization", "Industries Served": "Manufacturing; Distribution; Construction & Building Services; Food & Beverage; Healthcare; Municipalities & Public Works; Retail Chains; Professional Services; Non-Profits; Labor Unions", "Deal Size": "$3M+ lending platform; target borrowers generally $10M+ annual gross revenue", "Cost of Capital": "Traditional bank pricing; exact rate depends on product, collateral, borrower credit, and structure; loans likely priced off Treasury/SOFR + spread", "Revenue Requirements": "$10M+ annual gross revenue; profitable businesses; must support requested debt at 1.25x DSCR", "Required Documentation": "Full bank underwriting package likely required: business financials/tax returns, YTD financials, debt schedule, collateral details, ownership/guarantor information, loan purpose/use of funds, and SBA-specific documents if applicable", "Marketing Materials Link": "", "Relationship Owner": "Ryan", "Website": "https://www.customersbank.com/commercial/", "Contact Email": "gmahmoud@customersbank.com", "Contact Phone": "(415) 215-6638", "Contact Name": "Gio Mahmoud", "Meeting Notes": "Followed up Regarding Referral Agreement- Need to fill out forms 6/23/26", "Referral Agreement Link": "", "#": 25, "Onboarding Status": "In Progress"}, {"Name": "Agile Solutions", "Referral Agreement Signed?": "Recieved- Need to Sign Spoke About a 50/50 fee split", "BA SF": "", "Capital Category": "Capital Advisory / Debt Placement / Private Credit Placement", "Product Types": "Business Loans; Asset-Based Lending; Working Capital; Equipment Financing; Invoice Factoring; Acquisition Financing; LBO Financing; Debt Refinancing; Private Credit Syndication", "Industries Served": "Manufacturing; Construction; Data Centers; Utilities; Mining; Pharmaceutical; Infrastructure; Middle Market Businesses; North American borrowers", "Deal Size": "Sweet spot $5M–$150M; transactions under $150M referred to Agile; larger transactions handled by BA or syndicated", "Cost of Capital": "Not a direct standardized lender; cost of capital varies by lender, credit profile, collateral, leverage, structure, and market conditions", "Revenue Requirements": "No fixed revenue requirement stated; best fit is middle-market or asset-heavy businesses with meaningful revenue, collateral, EBITDA, or transaction value", "Required Documentation": "Company overview/CIM; financial statements; tax returns; YTD financials; debt schedule; collateral details; AR/AP aging if applicable; use of funds; lender-specific underwriting package", "Marketing Materials Link": "", "Relationship Owner": "Ryan", "Website": "https://agilesolutions.global/", "Contact Email": "loic@agilesolutions.ca", "Contact Phone": "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3ySMTsZpMu-SnZVhsnD9MB4vCeRZ_HFVIVpG3d685Cw29yfEy_YEV4YU-9r85_i5c8IND-k3Ch", "Contact Name": "Loïc (LG) Labrosse-Girard", "Meeting Notes": "Followed up Regarding Referral Agreement- 6/23/26", "Referral Agreement Link": "", "#": 26, "Onboarding Status": "In Progress"}, {"Name": "National Business Capital", "Referral Agreement Signed?": "Yes", "BA SF": "30 % of all commissions earned", "Capital Category": "Growth Capital / Alternative SMB Lending / Subordinated Cash-Flow Financing", "Product Types": "Subordinated Debt; Junior Capital; Term Loans; Lines of Credit; Working Capital; Growth Capital; Acquisition Financing; Overadvance / Stretch Financing; Debt Refinancing; Equipment Financing through lender network", "Industries Served": "Industry agnostic; strong fit for healthcare, construction, manufacturing, wholesale, distribution, retail, technology, restaurants, and other B2B/B2C operating companies", "Deal Size": "$250K–$15M; generally sized off cash flow and annual revenue; can sit behind a senior lender; terms up to 2 years for subordinated debt", "Cost of Capital": "Cost of capital not stated; varies by borrower, cash flow, credit profile, senior lender structure, and facility type; non-dilutive with no equity, warrants, or control terms", "Revenue Requirements": "$2M–$100M+ annual revenue; 620+ FICO; 1–2+ years in business depending on program; ideal borrowers have strong margins, consistent cash flow, and an existing or pending senior lender", "Required Documentation": "12 months bank statements; prior year tax return; AR aging report; application/business info; may also require financial statements, debt schedule, and details on senior lender/payoff or funding gap", "Marketing Materials Link": "https://drive.google.com/file/d/1YTQUPeyQES2grleC-hK_sDbMQ1jPibu9/view?usp=drive_linkhttps://drive.google.com/file/d/1GbsG4w5IasebjLB-W7G6vFgV7CcZ26O4/view?usp=drive_linkhttps://drive.google.com/file/d/11vPcDH8sdcxaQy_3u_o6gTa_HNPscFe1/view?usp=drive_link", "Relationship Owner": "Ryan", "Website": "https://www.nationalbusinesscapital.com/", "Contact Email": "smcquaide@national.biz", "Contact Phone": "631-519-2761", "Contact Name": "Steven McQuaide", "Meeting Notes": "Need to go over partner portal", "Referral Agreement Link": "", "#": 27, "Onboarding Status": "Signed"}, {"Name": "JTSA (Crypto Lending)", "Referral Agreement Signed?": "", "BA SF": "", "Capital Category": "Crypto Lending (referred via Liquidity Ventures)", "Product Types": "", "Industries Served": "", "Deal Size": "", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "", "Relationship Owner": "", "Website": "https://www.jtsaglobal.com/", "Contact Email": "", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "", "Referral Agreement Link": "https://drive.google.com/file/d/1gFIUFUw9sp0ocNt622db8KTxBIB0dGP-/view?usp=drive_link", "#": 28, "Onboarding Status": "Prospect"}, {"Name": "Raiseview", "Referral Agreement Signed?": "", "BA SF": "", "Capital Category": "", "Product Types": "", "Industries Served": "", "Deal Size": "", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "", "Relationship Owner": "", "Website": "", "Contact Email": "", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "", "Referral Agreement Link": "", "#": 29, "Onboarding Status": "Prospect"}, {"Name": "Ondeck", "Referral Agreement Signed?": "", "BA SF": "", "Capital Category": "", "Product Types": "", "Industries Served": "", "Deal Size": "", "Cost of Capital": "", "Revenue Requirements": "", "Required Documentation": "", "Marketing Materials Link": "", "Relationship Owner": "", "Website": "", "Contact Email": "", "Contact Phone": "", "Contact Name": "", "Meeting Notes": "", "Referral Agreement Link": "", "#": 30, "Onboarding Status": "Prospect"}];
+const FIELDS = [["Referral Agreement Signed?", "Agreement status (as recorded)"], ["BA SF", "BA referral split / economics"], ["Referral Agreement Link", "Signed agreement (Drive)"], ["Capital Category", "Capital category"], ["Product Types", "Product types"], ["Industries Served", "Industries served"], ["Deal Size", "Deal size"], ["Cost of Capital", "Cost of capital"], ["Revenue Requirements", "Revenue requirements"], ["Required Documentation", "Required documentation"], ["Relationship Owner", "Relationship owner"], ["Website", "Website"], ["Contact Name", "Contact"], ["Contact Email", "Email"], ["Contact Phone", "Phone"], ["Meeting Notes", "Meeting notes"], ["Marketing Materials Link", "Marketing materials (Drive)"]];
+
+const STATUS = {
+  "Signed":{cls:"signed",bar:"s-signed",label:"Signed"},
+  "In Progress":{cls:"progress",bar:"s-progress",label:"In Progress"},
+  "Prospect":{cls:"prospect",bar:"s-prospect",label:"Prospect"},
+  "No Program":{cls:"none",bar:"s-none",label:"No Program"},
+};
+const ORDER = ["Signed","In Progress","Prospect","No Program"];
+const esc = s => (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const has = v => v && String(v).trim().length>0;
+const isUrl = v => /^https?:\/\//i.test(String(v||"").trim());
+const isEmail = v => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(v||"").trim());
+
+let state = {view:"directory", q:"", status:new Set(), owner:"", sort:"#", dir:1};
+
+/* ---- theme ---- */
+const root=document.documentElement;
+document.getElementById("themeBtn").onclick=()=>{
+  const cur=root.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  root.setAttribute("data-theme", cur==="dark"?"light":"dark");
+};
+
+/* ---- KPIs ---- */
+function renderKpis(){
+  const c={};ORDER.forEach(s=>c[s]=0);
+  DATA.forEach(d=>c[d["Onboarding Status"]]=(c[d["Onboarding Status"]]||0)+1);
+  const tiles=[
+    {n:DATA.length,l:"Total partners",cls:""},
+    {n:c["Signed"],l:"Referral signed",cls:"ok"},
+    {n:c["In Progress"],l:"In progress",cls:"warn"},
+    {n:c["Prospect"],l:"Early prospects",cls:"info"},
+    {n:c["No Program"],l:"No referral program",cls:"stop"},
+  ];
+  document.getElementById("kpis").innerHTML=tiles.map(t=>
+    `<div class="kpi ${t.cls}"><span class="stripe"></span><div class="n">${t.n}</div><div class="l">${t.l}</div></div>`).join("");
+}
+
+/* ---- pipeline ---- */
+function renderPipeline(){
+  const c={};ORDER.forEach(s=>c[s]=0);
+  DATA.forEach(d=>c[d["Onboarding Status"]]++);
+  const tot=DATA.length;
+  document.getElementById("pipeTotal").textContent=tot+" partners";
+  document.getElementById("pipeBar").innerHTML=ORDER.map(s=>{
+    const w=(c[s]/tot*100).toFixed(2);
+    return c[s]?`<i class="${STATUS[s].bar}" style="width:${w}%" title="${s}: ${c[s]}"></i>`:"";
+  }).join("");
+  document.getElementById("pipeLegend").innerHTML=ORDER.map(s=>
+    `<span><i class="${STATUS[s].bar}" style="background:var(--${STATUS[s].cls==='signed'?'ok':STATUS[s].cls==='progress'?'warn':STATUS[s].cls==='prospect'?'info':'stop'})"></i>${s} &middot; ${c[s]}</span>`).join("");
+}
+
+/* ---- filters UI ---- */
+function renderChips(){
+  const c={};ORDER.forEach(s=>c[s]=0);DATA.forEach(d=>c[d["Onboarding Status"]]++);
+  document.getElementById("statusChips").innerHTML=ORDER.map(s=>{
+    const on=state.status.has(s);
+    const color=STATUS[s].cls==='signed'?'ok':STATUS[s].cls==='progress'?'warn':STATUS[s].cls==='prospect'?'info':'stop';
+    return `<button class="chip" data-status="${s}" aria-pressed="${on}"><span class="dot" style="background:var(--${color})"></span>${s}<span class="ct">${c[s]}</span></button>`;
+  }).join("");
+  document.querySelectorAll(".chip[data-status]").forEach(b=>b.onclick=()=>{
+    const s=b.dataset.status; state.status.has(s)?state.status.delete(s):state.status.add(s);
+    renderChips(); renderTable();
+  });
+}
+function renderOwners(){
+  const set=new Set();
+  DATA.forEach(d=>{ if(has(d["Relationship Owner"])){
+    d["Relationship Owner"].split(/[\/,]/).forEach(o=>{o=o.trim();if(o)set.add(o);});
+  }});
+  const sel=document.getElementById("ownerSel");
+  [...set].sort().forEach(o=>{const op=document.createElement("option");op.value=o;op.textContent=o;sel.appendChild(op);});
+  sel.onchange=()=>{state.owner=sel.value;renderTable();};
+}
+
+/* ---- filtering ---- */
+function filtered(){
+  let rows=DATA.slice();
+  if(state.status.size) rows=rows.filter(d=>state.status.has(d["Onboarding Status"]));
+  if(state.owner) rows=rows.filter(d=>(d["Relationship Owner"]||"").toLowerCase().includes(state.owner.toLowerCase()));
+  if(state.q){
+    const q=state.q.toLowerCase();
+    rows=rows.filter(d=>Object.entries(d).some(([k,v])=>k!=="#"&&String(v).toLowerCase().includes(q)));
+  }
+  const s=state.sort, dir=state.dir;
+  rows.sort((a,b)=>{
+    if(s==="#") return (a["#"]-b["#"])*dir;
+    if(s==="Onboarding Status") return (ORDER.indexOf(a[s])-ORDER.indexOf(b[s]))*dir || (a["#"]-b["#"]);
+    return String(a[s]||"").localeCompare(String(b[s]||""),undefined,{sensitivity:"base"})*dir;
+  });
+  return rows;
+}
+
+/* ---- table render ---- */
+const DIR_COLS=[
+  {k:"#",label:"#",cls:"num",sortable:true},
+  {k:"Name",label:"Partner",cls:"name",sortable:true},
+  {k:"Onboarding Status",label:"Status",cls:"status",sortable:true},
+  {k:"BA SF",label:"Referral split",cls:"split",sortable:false},
+  {k:"Capital Category",label:"Capital category",cls:"cat",sortable:true},
+  {k:"Deal Size",label:"Deal size",cls:"deal",sortable:false},
+  {k:"Relationship Owner",label:"Owner",cls:"owner",sortable:true},
+];
+const ECON_COLS=[
+  {k:"#",label:"#",cls:"num",sortable:true},
+  {k:"Name",label:"Partner",cls:"name",sortable:true},
+  {k:"Onboarding Status",label:"Status",cls:"status",sortable:true},
+  {k:"Referral Agreement Signed?",label:"Agreement status (recorded)",cls:"econ-agree",sortable:false},
+  {k:"BA SF",label:"BA referral split / economics",cls:"econ-split",sortable:false},
+  {k:"Referral Agreement Link",label:"Doc",cls:"doc",sortable:false},
+];
+function pill(s){const st=STATUS[s]||STATUS["Prospect"];return `<span class="pill ${st.cls}"><i></i>${st.label}</span>`;}
+function cellHtml(col,d){
+  const v=d[col.k];
+  if(col.k==="#") return `<td class="num">${esc(v)}</td>`;
+  if(col.k==="Name"){
+    const contact=has(d["Contact Name"])?`<div class="sub">${esc(d["Contact Name"])}</div>`:
+      (has(d["Website"])?`<div class="sub">${esc(String(d["Website"]).replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))}</div>`:"");
+    return `<td class="name">${esc(v)}${contact}</td>`;
+  }
+  if(col.k==="Onboarding Status") return `<td>${pill(v)}</td>`;
+  if(col.cls==="split") return `<td class="split"><div class="clamp">${has(v)?esc(v):'<span class="muted">—</span>'}</div></td>`;
+  if(col.cls==="cat") return `<td class="cat"><div class="clamp">${esc(v)||'<span class="muted">—</span>'}</div></td>`;
+  if(col.cls==="deal") return `<td class="deal"><div class="clamp">${esc(v)||'<span class="muted">—</span>'}</div></td>`;
+  if(col.cls==="owner") return `<td class="owner">${esc(v)||'<span class="muted">—</span>'}</td>`;
+  if(col.cls==="econ-agree") return `<td class="econ-agree">${has(v)?esc(v):'<span class="muted">— not recorded</span>'}</td>`;
+  if(col.cls==="econ-split") return `<td class="econ-split">${has(v)?esc(v):'<span class="muted">— not recorded</span>'}</td>`;
+  if(col.cls==="doc") return `<td>${isUrl(v)?`<a class="linkpill" href="${esc(v)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ view</a>`:'<span class="muted">—</span>'}</td>`;
+  return `<td>${esc(v)}</td>`;
+}
+function renderTable(){
+  const cols = state.view==="economics"?ECON_COLS:DIR_COLS;
+  document.getElementById("thead").innerHTML="<tr>"+cols.map(c=>{
+    const active=state.sort===c.k;
+    const ar=active?(state.dir>0?"▲":"▼"):"";
+    return `<th class="${c.sortable?'sortable':''}" data-k="${c.k}" data-sortable="${c.sortable}">${c.label}${active?` <span class="ar">${ar}</span>`:""}</th>`;
+  }).join("")+"</tr>";
+  document.querySelectorAll("thead th[data-sortable='true']").forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    if(state.sort===k) state.dir*=-1; else {state.sort=k;state.dir=1;}
+    renderTable();
+  });
+  const rows=filtered();
+  const tb=document.getElementById("tbody");
+  tb.innerHTML=rows.map(d=>`<tr data-id="${d["#"]}">`+cols.map(c=>cellHtml(c,d)).join("")+`</tr>`).join("");
+  document.getElementById("empty").hidden=rows.length>0;
+  document.getElementById("rowCount").textContent=`${rows.length} of ${DATA.length} shown`;
+  tb.querySelectorAll("tr").forEach(tr=>tr.onclick=()=>openDrawer(+tr.dataset.id));
+}
+
+/* ---- drawer ---- */
+function linkVal(v){
+  const t=String(v||"").trim();
+  if(isUrl(t)){
+    const parts=t.split(/\s+/).filter(isUrl);
+    if(parts.length>1) return parts.map((u,i)=>`<a href="${esc(u)}" target="_blank" rel="noopener">↗ Document ${i+1}</a>`).join(" &nbsp; ");
+    return `<a href="${esc(t)}" target="_blank" rel="noopener">${esc(t.replace(/^https?:\/\/(www\.)?/,'').slice(0,52))}${t.length>60?'…':''} ↗</a>`;
+  }
+  if(isEmail(t)) return `<a href="mailto:${esc(t)}">${esc(t)}</a>`;
+  return esc(t);
+}
+function openDrawer(id){
+  const d=DATA.find(x=>x["#"]===id); if(!d) return;
+  const st=STATUS[d["Onboarding Status"]]||STATUS["Prospect"];
+  const agree=d["Referral Agreement Signed?"];
+  const split=d["BA SF"];
+  const dlink=d["Referral Agreement Link"];
+  const groups=[
+    ["Referral economics", ["Referral Agreement Signed?","BA SF","Referral Agreement Link"]],
+    ["Capital & lending profile", ["Capital Category","Product Types","Industries Served","Deal Size","Cost of Capital","Revenue Requirements","Required Documentation"]],
+    ["Relationship & contacts", ["Relationship Owner","Website","Contact Name","Contact Email","Contact Phone","Meeting Notes","Marketing Materials Link"]],
+  ];
+  const labelOf=Object.fromEntries(FIELDS);
+  let body=`
+    <div class="econcard">
+      <div class="lab">◆ Referral split &middot; BA SF</div>
+      <div class="split">${has(split)?esc(split):'<span class="muted" style="font-style:italic">Not recorded in workbook</span>'}</div>
+      <div class="agreerow">
+        <span>Agreement:</span> ${pill(d["Onboarding Status"])}
+        ${has(agree)?`<span style="color:var(--ink-3)">${esc(agree)}</span>`:""}
+        ${isUrl(dlink)?`<a class="linkpill" href="${esc(dlink.split(/\s+/)[0])}" target="_blank" rel="noopener">↗ signed doc</a>`:""}
+      </div>
+    </div>`;
+  groups.forEach(([title,keys])=>{
+    const rowsHtml=keys.filter(k=>has(d[k])).map(k=>
+      `<div class="field"><div class="k">${esc(labelOf[k]||k)}</div><div class="v">${linkVal(d[k])}</div></div>`).join("");
+    if(rowsHtml) body+=`<div class="section-label">${title}</div>${rowsHtml}`;
+  });
+  document.getElementById("drawer").innerHTML=`
+    <div class="dhead">
+      <div>
+        <div class="idx">Partner #${d["#"]}</div>
+        <h2>${esc(d["Name"])}</h2>
+        <div class="meta">${pill(d["Onboarding Status"])}${has(d["Capital Category"])?`<span style="color:var(--ink-3);font-size:12.5px">${esc(d["Capital Category"].split(/[\/,]/)[0].trim())}</span>`:""}</div>
+      </div>
+      <button class="xbtn" onclick="closeDrawer()" aria-label="Close">×</button>
+    </div>
+    <div class="dbody">${body}</div>`;
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","false");
+  document.getElementById("scrim").classList.add("open");
+}
+function closeDrawer(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","true");
+  document.getElementById("scrim").classList.remove("open");
+}
+document.getElementById("scrim").onclick=closeDrawer;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+
+/* ---- tabs + search ---- */
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute("aria-selected","false"));
+  b.setAttribute("aria-selected","true");
+  state.view=b.dataset.view;
+  if(state.view==="economics"&&state.sort!=="#"&&!["Name","Onboarding Status"].includes(state.sort)){state.sort="#";state.dir=1;}
+  renderTable();
+});
+let t;document.getElementById("search").oninput=e=>{clearTimeout(t);t=setTimeout(()=>{state.q=e.target.value.trim();renderTable();},120);};
+document.getElementById("asof").textContent="Generated "+new Date().toISOString().slice(0,10);
+
+renderKpis();renderPipeline();renderChips();renderOwners();renderTable();
+</script>
+
+</body>
+</html>
